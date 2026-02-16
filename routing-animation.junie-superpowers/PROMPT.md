@@ -1,5 +1,7 @@
 Develop a TypeScript application to animate A* routing calculations:
-- The user selects the OSM file using a custom made file browser, that scans the directory public/maps for OSM files. The selected map is parsed and shown on the screen using a clear map palette. 
+- The user selects the OSM file using a custom made file browser, that scans the directory public/maps for OSM files.
+- The OSM XML files are gzipped and end with `.osm.gz`.
+- The selected map is parsed and shown on the screen using a clear map palette. 
 - The UI contains a toggle to shown background OSM map tiles 50% transparent (default on). 
 - The user can click on an origin/destination point on the map. A route is calculated between origin and destination. 
 - There are 3 routing modes: car, bicycle and pedestrian. Depending on the routing mode, the clicked points are snapped to (interpolated points on the) roads that are valid for that type of routing. 
