@@ -16,8 +16,17 @@ export class OSMParser {
   private decompress(buffer: ArrayBuffer): string {
     try {
       const uint8Array = new Uint8Array(buffer);
-      const decompressed = pako.inflate(uint8Array, { to: 'string' });
-      return decompressed;
+
+      // Check if it looks like gzip data (starts with 0x1f 0x8b)
+      if (uint8Array[0] === 0x1f && uint8Array[1] === 0x8b) {
+        // It's gzipped, decompress it
+        const decompressed = pako.inflate(uint8Array, { to: 'string' });
+        return decompressed;
+      } else {
+        // Not gzipped, assume it's already decompressed text
+        const decoder = new TextDecoder('utf-8');
+        return decoder.decode(uint8Array);
+      }
     } catch (error) {
       throw new Error(`Decompression failed: ${error}`);
     }
