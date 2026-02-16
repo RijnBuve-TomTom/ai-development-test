@@ -10,5 +10,7 @@ Develop a TypeScript application to animate A* routing calculations:
 - The user can select an animation speed from 1-10 (very slow to very fast).
 - All UI elements are presented in a semi-transparent floating settings box, that can be moved by the user. The user must be able to select a dark and light theme for the UI.
 
+---
+
 An example of the UI can be found here:
 ![UI](images/greenfield-routing-animation-01.png)
