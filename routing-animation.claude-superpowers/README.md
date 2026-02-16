@@ -1,4 +1,4 @@
 Configuration:
-- JetBrains Junie
+- Anthropic Claude
 - Skill superpowers
-- Sonnet 4.6
+- Sonnet 4.5
