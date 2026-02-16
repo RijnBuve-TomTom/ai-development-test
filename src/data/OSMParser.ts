@@ -3,7 +3,7 @@ import { ParsedOSM, OSMNode, OSMWay } from '../core/types.js';
 
 export class OSMParser {
   public async parseFile(filename: string): Promise<ParsedOSM> {
-    const response = await fetch(`/public/maps/${filename}`);
+    const response = await fetch(`/maps/${filename}`);
     if (!response.ok) {
       throw new Error(`Failed to load file: ${filename}`);
     }

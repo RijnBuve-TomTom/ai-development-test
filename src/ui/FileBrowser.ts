@@ -14,7 +14,7 @@ export class FileBrowser {
 
   private async loadFileList(): Promise<void> {
     try {
-      const response = await fetch('/public/maps/index.json');
+      const response = await fetch('/maps/index.json');
       this.files = await response.json();
       this.render();
     } catch (error) {
