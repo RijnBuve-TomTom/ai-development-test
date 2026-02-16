@@ -3,6 +3,13 @@
 This directory contain standard queries for some tests to see how well
 different AI agents perform for software development.
 
+The idea is to regenerate the same application or refactoring multiple
+times using different AI tools, such as 
+- Claude or Junie stand-alone
+- or with the `superpowers` skill
+- or using `ralph-tui` and `create-prd`
+- or using a plain Ralph loop.
+
 Some queries are for 'greenfield' software development, others are for
 working on existing code bases.
 
