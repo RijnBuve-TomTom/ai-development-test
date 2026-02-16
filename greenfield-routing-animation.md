@@ -9,3 +9,6 @@ Develop a TypeScript application to animate A* routing calculations:
 - When the route is calculated, the system animates all roads that are being examined as blue lines. During this animation, the fastest route (end result) is always highlighted (growing, like the rest of the tree) as a thick red line. The red line must be on top of the rest, so it is always visible.
 - The user can select an animation speed from 1-10 (very slow to very fast).
 - All UI elements are presented in a semi-transparent floating settings box, that can be moved by the user. The user must be able to select a dark and light theme for the UI.
+
+An example of the UI can be found here:
+![UI](images/greenfield-routing-animation-01.png)
