@@ -1,23 +1,33 @@
-import mapboxgl from 'mapbox-gl';
+import maplibregl from 'maplibre-gl';
 import { LatLng } from '../core/types.js';
 import { RoadNetwork } from '../data/RoadNetwork.js';
 
 export class MapRenderer {
-  private map: mapboxgl.Map | null = null;
-  private originMarker: mapboxgl.Marker | null = null;
-  private destinationMarker: mapboxgl.Marker | null = null;
+  private map: maplibregl.Map | null = null;
+  private originMarker: maplibregl.Marker | null = null;
+  private destinationMarker: maplibregl.Marker | null = null;
 
   public initialize(container: string | HTMLElement): void {
-    const token = import.meta.env.VITE_MAPBOX_TOKEN;
-    if (!token) {
-      throw new Error('Mapbox token not found. Please set VITE_MAPBOX_TOKEN in .env file');
-    }
-
-    mapboxgl.accessToken = token;
-
-    this.map = new mapboxgl.Map({
+    this.map = new maplibregl.Map({
       container,
-      style: 'mapbox://styles/mapbox/light-v11',
+      style: {
+        version: 8,
+        sources: {
+          'osm-raster': {
+            type: 'raster',
+            tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+            tileSize: 256,
+            attribution: '© OpenStreetMap contributors'
+          }
+        },
+        layers: [{
+          id: 'osm-raster-layer',
+          type: 'raster',
+          source: 'osm-raster',
+          minzoom: 0,
+          maxzoom: 22
+        }]
+      },
       center: [4.4777, 52.1601], // Leiden, Netherlands
       zoom: 13,
     });
@@ -29,26 +39,6 @@ export class MapRenderer {
 
   private initializeLayers(): void {
     if (!this.map) return;
-
-    // Add OSM tiles layer
-    this.map.addSource('osm-tiles', {
-      type: 'raster',
-      tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
-      tileSize: 256,
-      attribution: '© OpenStreetMap contributors',
-    });
-
-    this.map.addLayer({
-      id: 'osm-tiles-layer',
-      type: 'raster',
-      source: 'osm-tiles',
-      paint: {
-        'raster-opacity': 0.5,
-      },
-      layout: {
-        visibility: 'visible',
-      },
-    });
 
     // Add road network source
     this.map.addSource('road-network', {
@@ -137,7 +127,7 @@ export class MapRenderer {
       }
     }
 
-    const source = this.map.getSource('road-network') as mapboxgl.GeoJSONSource;
+    const source = this.map.getSource('road-network') as maplibregl.GeoJSONSource;
     if (source) {
       source.setData({
         type: 'FeatureCollection',
@@ -147,7 +137,7 @@ export class MapRenderer {
 
     // Fit map to network bounds
     if (nodes.size > 0) {
-      const bounds = new mapboxgl.LngLatBounds();
+      const bounds = new maplibregl.LngLatBounds();
       nodes.forEach(node => {
         bounds.extend([node.lon, node.lat]);
       });
@@ -189,7 +179,7 @@ export class MapRenderer {
       }
     }
 
-    const source = this.map.getSource('explored-nodes') as mapboxgl.GeoJSONSource;
+    const source = this.map.getSource('explored-nodes') as maplibregl.GeoJSONSource;
     if (source) {
       source.setData({
         type: 'FeatureCollection',
@@ -224,7 +214,7 @@ export class MapRenderer {
       }
     }
 
-    const source = this.map.getSource('best-path') as mapboxgl.GeoJSONSource;
+    const source = this.map.getSource('best-path') as maplibregl.GeoJSONSource;
     if (source) {
       source.setData({
         type: 'FeatureCollection',
@@ -243,7 +233,7 @@ export class MapRenderer {
   public setOSMTilesVisible(visible: boolean): void {
     if (!this.map) return;
     this.map.setLayoutProperty(
-      'osm-tiles-layer',
+      'osm-raster-layer',
       'visibility',
       visible ? 'visible' : 'none'
     );
@@ -253,7 +243,7 @@ export class MapRenderer {
     if (!this.map) return;
 
     const color = type === 'origin' ? '#00ff00' : '#ff0000';
-    const marker = new mapboxgl.Marker({ color })
+    const marker = new maplibregl.Marker({ color })
       .setLngLat([location.lng, location.lat])
       .addTo(this.map);
 
@@ -275,7 +265,7 @@ export class MapRenderer {
 
   public clearExploredNodes(): void {
     if (!this.map) return;
-    const source = this.map.getSource('explored-nodes') as mapboxgl.GeoJSONSource;
+    const source = this.map.getSource('explored-nodes') as maplibregl.GeoJSONSource;
     if (source) {
       source.setData({ type: 'FeatureCollection', features: [] });
     }
@@ -283,7 +273,7 @@ export class MapRenderer {
 
   public clearBestPath(): void {
     if (!this.map) return;
-    const source = this.map.getSource('best-path') as mapboxgl.GeoJSONSource;
+    const source = this.map.getSource('best-path') as maplibregl.GeoJSONSource;
     if (source) {
       source.setData({ type: 'FeatureCollection', features: [] });
     }
@@ -296,7 +286,7 @@ export class MapRenderer {
     });
   }
 
-  public getMap(): mapboxgl.Map | null {
+  public getMap(): maplibregl.Map | null {
     return this.map;
   }
 }

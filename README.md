@@ -7,7 +7,8 @@ An interactive web application that visualizes A* pathfinding on OpenStreetMap d
 - Load and parse gzipped OSM XML files
 - Three routing modes: Car, Bicycle, Pedestrian
 - Animated A* route calculation visualization
-- Interactive map with Mapbox GL JS
+- Interactive map with MapLibre GL (open-source, no API key required)
+- Free OpenStreetMap tiles
 - Draggable settings panel with light/dark themes
 - Configurable animation speed (1-10)
 
@@ -18,17 +19,12 @@ An interactive web application that visualizes A* pathfinding on OpenStreetMap d
    npm install
    ```
 
-2. **Configure Mapbox token:**
-   - Copy `.env.example` to `.env`
-   - Get your free Mapbox token from https://account.mapbox.com/access-tokens/
-   - Replace `YOUR_MAPBOX_TOKEN_HERE` in `.env` with your token
-
-3. **Run development server:**
+2. **Run development server:**
    ```bash
    npm run dev
    ```
 
-4. **Open browser:**
+3. **Open browser:**
    Navigate to `http://localhost:3000`
 
 ## Usage
@@ -51,7 +47,7 @@ src/
 ├── core/           # StateManager and types
 ├── data/           # OSM parsing and graph
 ├── routing/        # A* algorithm and map matching
-├── map/            # Mapbox rendering and animation
+├── map/            # MapLibre rendering and animation
 └── ui/             # User interface components
 ```
 
