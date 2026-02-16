@@ -13,4 +13,9 @@ times using different AI tools, such as
 Some queries are for 'greenfield' software development, others are for
 working on existing code bases.
 
+## greenfield-routing-animation.md
+
+An example of the UI can be found here:
+![UI](images/greenfield-routing-animation-01.png)
+
 Rijn Buve, 2026
